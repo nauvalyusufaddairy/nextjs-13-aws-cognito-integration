@@ -8,14 +8,13 @@ import { NextRequest, NextResponse } from "next/server";
  * @param req this param get request from api hit
  * @param res this param return response to client
  */
-export async function POST(req: Request, res: NextResponse) {
+export async function POST(req: NextRequest, res: NextResponse) {
   // get data from user which is email address and password who registered before
 
   // the backend will verify if the credential is accepted or not
   // btw today i want finish up this particular method to gain accesss control the web
   // after i build the function so there i want to keep it up to build another function
-  const request = await req.json();
-  const { email, password } = request;
+  console.log("hahahaha", req.url);
   const {
     COGNITO_CLIENT_ID,
     COGNITO_POOL_ID,
@@ -23,6 +22,9 @@ export async function POST(req: Request, res: NextResponse) {
     AWS_SECRET_ACCESS_KEY,
     AWS_ACCESS_ID,
   } = process.env;
+  const { searchParams } = new URL(req.url);
+  const email = searchParams.get("email") as string;
+  const password = searchParams.get("password") as string;
 
   const administratifClient = new AdminInitiateAuthCommand({
     AuthFlow: "ADMIN_USER_PASSWORD_AUTH",

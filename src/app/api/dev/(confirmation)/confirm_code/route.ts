@@ -8,7 +8,9 @@ const { REGION, COGNITO_CLIENT_ID, AWS_ACCESS_ID, AWS_SECRET_ACCESS_KEY } =
   process.env;
 
 export async function POST(req: NextRequest, res: Response) {
-  const { code, email } = await req.json();
+  const { searchParams } = new URL(req.url);
+  const code = searchParams.get("code") as string;
+  const email = searchParams.get("email") as string;
 
   const client = new CognitoIdentityProviderClient({
     region: REGION,

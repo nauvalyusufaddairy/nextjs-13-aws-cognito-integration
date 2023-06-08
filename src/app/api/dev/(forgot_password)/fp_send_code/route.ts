@@ -6,7 +6,8 @@ import {
 import { NextRequest, NextResponse } from "next/server";
 const { REGION, COGNITO_CLIENT_ID } = process.env;
 export async function POST(req: NextRequest, res: NextResponse) {
-  const { email } = await req.json();
+  const { searchParams } = new URL(req.url);
+  const email = searchParams.get("email") as string;
   const client = new CognitoIdentityProviderClient({
     region: REGION,
   });
