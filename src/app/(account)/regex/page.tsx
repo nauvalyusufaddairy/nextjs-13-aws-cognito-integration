@@ -15,7 +15,7 @@ const Reg = () => {
     email: yup
       .string()
       .required("email is required")
-      .matches(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)\.(\w{2,})+$/, "huntu"),
+      .matches(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*\.(\w{2,})+$/, "huntu"),
   });
   return (
     <div>
@@ -24,9 +24,18 @@ const Reg = () => {
         onSubmit={(e) => console.log(e)}
         validationSchema={emailSchema}
       >
-        {({ handleChange, handleSubmit }: FormikProps<{ email: "" }>) => (
+        {({
+          handleChange,
+          handleSubmit,
+          values,
+        }: FormikProps<{ email: "" }>) => (
           <Form onSubmit={handleSubmit}>
-            <input type="text" onChange={handleChange} name="email" />
+            <input
+              type="text"
+              onChange={handleChange}
+              name="email"
+              value={values.email}
+            />
             <ErrorMessage component="div" name="email" />
             <button type="submit">submit</button>
           </Form>
