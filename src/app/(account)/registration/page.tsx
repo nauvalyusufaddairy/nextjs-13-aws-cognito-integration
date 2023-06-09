@@ -88,7 +88,7 @@ function Register() {
     email: yup
       .string()
       .required("email is required")
-      .matches(/^\w+([\.-\w])*@\w+([\.-\w+])*\.(\w{2,})+$ /),
+      .matches(/^\w+([\.-]?\w)*@\w+([\.-]?\w)*\.(\w{2,})+$/),
   });
   return (
     <div>
