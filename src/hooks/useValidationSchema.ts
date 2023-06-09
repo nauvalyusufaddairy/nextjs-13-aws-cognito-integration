@@ -7,7 +7,10 @@ export function useValidationSchema() {
       password: yup.string().required("password is required").min(8),
     }),
     registrationSchema: yup.object().shape({
-      email: yup.string().required("email is required"),
+      email: yup
+        .string()
+        .required("email is required")
+        .matches(/^w+([\.-\w+])*@\w+(\.-w+)*\.(\w{2,})+$ /),
       password: yup.string().required("password is required").min(8),
       confirm_password: yup
         .string()
