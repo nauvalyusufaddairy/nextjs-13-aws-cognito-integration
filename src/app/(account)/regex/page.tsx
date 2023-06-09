@@ -15,7 +15,7 @@ const Reg = () => {
     email: yup
       .string()
       .required("email is required")
-      .matches(/^\w+([\.-]?\w)*@\w+([\.-]?\w)\.(\w{2,})+$/, "huntu"),
+      .matches(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)\.(\w{2,})+$/, "huntu"),
   });
   return (
     <div>
