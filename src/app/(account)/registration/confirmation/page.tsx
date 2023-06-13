@@ -11,22 +11,31 @@
 
 "use client";
 import React, { useEffect } from "react";
-
-import { Formik, Form, FormikProps, Field, ErrorMessage } from "formik";
+import { useSearchParams } from "next/navigation";
+import {
+  Formik,
+  Form,
+  FormikProps,
+  Field,
+  FormikState,
+  ErrorMessage,
+} from "formik";
 import { useAuth } from "@/hooks/useAuth";
 import { useValidationSchema } from "@/hooks/useValidationSchema";
 
-import { LoginValues } from "@/types";
+import { ConfirmRegistration, RegisterValues } from "@/types";
 
-const Login = () => {
-  const { login, errorMessage } = useAuth();
-  const { loginSchema } = useValidationSchema();
+const ConfirmReg = () => {
+  const searchParams = useSearchParams();
+  const email = searchParams.get("email") as string;
+  const { confirm_registration, errorMessage } = useAuth();
+  const { confirmRegistrationSchema } = useValidationSchema();
 
   return (
     <Formik
-      initialValues={{ email: "", password: "" }}
-      onSubmit={login}
-      validationSchema={loginSchema}
+      initialValues={{ email, code: "" }}
+      onSubmit={confirm_registration}
+      validationSchema={confirmRegistrationSchema}
     >
       {({
         isSubmitting,
@@ -35,42 +44,24 @@ const Login = () => {
 
         errors,
         touched,
-      }: FormikProps<LoginValues>) => (
+      }: FormikProps<ConfirmRegistration>) => (
         <Form onSubmit={handleSubmit}>
           <div className=" w-screen h-screen  bg-gradient-to-r from-pink-300 via-purple-300 to-indigo-400 md:px-[500px] md:py-[300px]">
             <div className="w-full h-full flex flex-col items-center rounded-md bg-slate-800 text-white md:px-[36px] md:py-[32px]">
-              <h2 className=" text-2xl mb-[42px]">Login Form</h2>
+              <h2 className=" text-2xl mb-[42px]">Confirm Registration</h2>
               <div className="w-full h-fit flex flex-col mb-[28px]">
                 <Field
                   className={`w-full h-[36px]  bg-transparent rounded-sm pl-2  ring-2 ring-white/50 `}
-                  placeholder="email"
-                  name="email"
+                  placeholder="enter your confirmation code"
+                  name="code"
                   type="text"
                 />
-                {errors.email && touched.email ? (
+                {errors.code && touched.code ? (
                   <>
                     {" "}
                     <ErrorMessage
                       component={"div"}
-                      name="email"
-                      className=" text-orange-300"
-                    />
-                  </>
-                ) : null}
-              </div>
-              <div className="w-full h-fit flex flex-col mb-[28px]">
-                <Field
-                  className={`w-full h-[36px]  bg-transparent rounded-sm pl-2  ring-2 ring-white/50 `}
-                  placeholder="password"
-                  name="password"
-                  type="password"
-                />
-                {errors.password && touched.password ? (
-                  <>
-                    {" "}
-                    <ErrorMessage
-                      component={"div"}
-                      name="password"
+                      name="code"
                       className=" text-orange-300"
                     />
                   </>
@@ -97,4 +88,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default ConfirmReg;

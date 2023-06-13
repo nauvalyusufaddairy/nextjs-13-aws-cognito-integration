@@ -15,7 +15,7 @@ const Reg = () => {
     email: yup
       .string()
       .required("email is required")
-      .matches(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*\.(\w{2,})+$/, "huntu"),
+      .matches(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,})+$/, "huntu"),
   });
   return (
     <div>
@@ -30,7 +30,7 @@ const Reg = () => {
           values,
         }: FormikProps<{ email: "" }>) => (
           <Form onSubmit={handleSubmit}>
-            <input
+            <Field
               type="text"
               onChange={handleChange}
               name="email"
@@ -46,3 +46,41 @@ const Reg = () => {
 };
 
 export default Reg;
+
+// "use client";
+// import React from "react";
+// import * as yup from "yup";
+// import { ErrorMessage, Field, Form, Formik, FormikProps } from "formik";
+
+// const FormTest = () => {
+//   const emailValidationSchema = yup.object().shape({
+//     email: yup
+//       .string()
+//       .required("email is required")
+//       .matches(
+//         /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,})+$/,
+//         "your email is incorrect"
+//       ),
+//   });
+//   return (
+//     <div>
+//       <Formik
+//         initialValues={{ email: "" }}
+//         validationSchema={emailValidationSchema}
+//         onSubmit={(e) => {
+//           console.log(e.email);
+//         }}
+//       >
+//         {({}: FormikProps<{ email: "" }>) => (
+//           <Form>
+//             <Field name="email" type="email" placeholder="email" />
+//             <ErrorMessage name="email" component="div" />
+//             <button type="submit">submit</button>
+//           </Form>
+//         )}
+//       </Formik>
+//     </div>
+//   );
+// };
+
+// export default FormTest;
