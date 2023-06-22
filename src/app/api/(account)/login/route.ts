@@ -43,9 +43,14 @@ export async function POST(req: Request, res: NextResponse) {
 
   try {
     const response = await client.send(administratifClient);
-    console.log(response);
-    return NextResponse.json(response);
+    console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>", response);
+
+    return NextResponse.json(
+      { name: email, id: response.AuthenticationResult?.AccessToken },
+      { status: 200 }
+    );
   } catch (e: any) {
-    return NextResponse.json({ status: 400, e });
+    console.log("Errr", e);
+    return NextResponse.json(e, { status: 401 });
   }
 }

@@ -7,6 +7,7 @@ import {
 } from "@/types";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { signIn, signOut } from "next-auth/react";
 
 export function useAuth() {
   const router = useRouter();
@@ -17,17 +18,25 @@ export function useAuth() {
   const [errorMessage, setError] = useState(initial);
 
   const login = async (values: LoginValues, { setSubmitting }: any) => {
-    console.log(values);
-    await fetch("/api/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(values),
-    }).then(async (res) => {
-      const data = await res.json();
-      console.log("ini looh data nya >>>", data);
-    });
+    console.log("hahahahahah", values);
+    await signIn("credentials", {
+      redirect: true,
+      callbackUrl: "/",
+      email: values.email,
+      password: values.password,
+    })
+      .then(async (res) => {
+        const data = await res?.status;
+
+        console.log("data>>>>>>>>>", data);
+        if (data === 401) {
+          return setError({
+            name: "login error",
+            message: "",
+          });
+        }
+      })
+      .finally(() => setSubmitting(false));
   };
 
   const confirm_registration = async (
