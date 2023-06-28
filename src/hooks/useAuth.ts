@@ -26,10 +26,10 @@ export function useAuth() {
       password: values.password,
     })
       .then(async (res) => {
-        const data = await res?.status;
+        const data = res?.status;
 
-        console.log("data>>>>>>>>>", data);
-        if (data === 401) {
+        console.log("data ini anjay", data);
+        if (typeof data === "undefined") {
           return setError({
             name: "login error",
             message: "",

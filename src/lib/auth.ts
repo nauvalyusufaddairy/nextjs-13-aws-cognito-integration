@@ -1,7 +1,12 @@
 import { NextAuthOptions } from "next-auth";
 import CredentialProvider from "next-auth/providers/credentials";
+const { NEXT_PUBLIC_SECRET } = process.env;
 
 export const authOptions: NextAuthOptions = {
+  secret: NEXT_PUBLIC_SECRET!,
+  session: {
+    strategy: "jwt",
+  },
   providers: [
     CredentialProvider({
       name: "credential",
@@ -30,8 +35,8 @@ export const authOptions: NextAuthOptions = {
         });
         const data = await res.json();
 
-        if (res.status === 200) {
-          console.log("status >>>", res.status);
+        if (data) {
+          console.log("status >>>", data);
           return data;
         }
         return null;
@@ -39,6 +44,20 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
   pages: {
-    signIn: "/auth/signIn",
+    signIn: "/login",
+    error: "/error",
+  },
+  callbacks: {
+    jwt({ token, user }) {
+      return { ...token, ...user };
+    },
+    session({ session, token }) {
+      session.user = token as any;
+      return session;
+    },
+    signIn({ account }) {
+      console.log("ini akun loh", account);
+      return true;
+    },
   },
 };

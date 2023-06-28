@@ -46,7 +46,12 @@ export async function POST(req: Request, res: NextResponse) {
     console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>", response);
 
     return NextResponse.json(
-      { name: email, id: response.AuthenticationResult?.AccessToken },
+      {
+        name: email,
+        accessToken: response.AuthenticationResult?.AccessToken,
+        // refreshToken: response.AuthenticationResult?.RefreshToken,
+        // idToken: response.AuthenticationResult?.IdToken,
+      },
       { status: 200 }
     );
   } catch (e: any) {

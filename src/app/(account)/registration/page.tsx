@@ -31,7 +31,7 @@ const Regiser = () => {
         touched,
       }: FormikProps<RegisterValues>) => (
         <Form onSubmit={handleSubmit}>
-          <div className=" w-screen h-screen  bg-gradient-to-r from-pink-300 via-purple-300 to-indigo-400 md:px-[500px] md:py-[100px]">
+          <div className=" w-screen h-screen  bg-gradient-to-r from-pink-300 via-purple-300 to-indigo-400 md:px-[500px] md:py-[300px]">
             <div className="w-full h-full flex flex-col items-center rounded-md bg-slate-800 text-white md:px-[36px] md:py-[32px]">
               <h2 className=" text-2xl mb-[42px]">Registration Form</h2>
               <div className="w-full h-fit flex flex-col mb-[28px]">
